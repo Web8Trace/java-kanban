@@ -1,6 +1,6 @@
-package com.github.Web8Trace.kanban.model;
+package com.github.web8trace.kanban.model;
 
-import com.github.Web8Trace.kanban.service.TaskStatus;
+import com.github.web8trace.kanban.service.TaskStatus;
 
 import java.util.Objects;
 
@@ -8,13 +8,7 @@ public class Task {
     private String name;
     private String description;
     private int id;
-    private TaskStatus status;
-
-    public Task(String name, String description) {
-        this.name = name;
-        this.description = description;
-        this.status = TaskStatus.NEW;
-    }
+    private TaskStatus status = TaskStatus.NEW;
 
     public String getName() {
         return name;
@@ -50,10 +44,16 @@ public class Task {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Task task = (Task) o;
-        return Objects.equals(name, task.name) && Objects.equals(description, task.description) && status == task.status;
+        return Objects.equals(name, task.name) &&
+                Objects.equals(description, task.description) &&
+                status == task.status;
     }
 
     @Override

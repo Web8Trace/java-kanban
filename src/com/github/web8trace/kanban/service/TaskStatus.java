@@ -1,4 +1,4 @@
-package com.github.Web8Trace.kanban.service;
+package com.github.web8trace.kanban.service;
 
 public enum TaskStatus {
     NEW,

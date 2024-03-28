@@ -1,8 +1,8 @@
-package com.github.Web8Trace.kanban.service;
+package com.github.web8trace.kanban.service;
 
-import com.github.Web8Trace.kanban.model.Epic;
-import com.github.Web8Trace.kanban.model.Subtask;
-import com.github.Web8Trace.kanban.model.Task;
+import com.github.web8trace.kanban.model.Epic;
+import com.github.web8trace.kanban.model.Subtask;
+import com.github.web8trace.kanban.model.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,9 +40,10 @@ public class TaskManager {
         return epics;
     }
 
-    public HashMap<Integer, Epic> addSubtaskInEpic(Epic e, Subtask s){
+    public HashMap<Integer, Epic> addSubtaskInEpic(Epic e, Subtask s) {
         ArrayList<Subtask> list = e.getSubtasks();
         list.add(s);
+        e.setStatus(TaskStatus.IN_PROGRESS);
         return epics;
     }
 
@@ -57,10 +58,14 @@ public class TaskManager {
         }
 
         for (Epic s : epics.values()) {
+            int areAllSubtasksDone = 0;
             for (int i = 0; i < s.getSubtasks().size(); i++) {
                 if (s.getSubtasks().get(i).getStatus() == TaskStatus.DONE) {
-                    s.setStatus(TaskStatus.DONE);
+                    areAllSubtasksDone++;
                 }
+            }
+            if (areAllSubtasksDone == s.getSubtasks().size()) {
+                s.setStatus(TaskStatus.DONE);
             }
         }
     }
@@ -115,7 +120,7 @@ public class TaskManager {
 
     @Override
     public String toString() {
-        return "com.github.Web8Trace.kanban.service.TaskManager{" +
+        return "TaskManager{" +
                 "id=" + id() +
                 ", task=" + tasks +
                 ", epic=" + epics +
