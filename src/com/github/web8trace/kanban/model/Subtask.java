@@ -3,11 +3,11 @@ package com.github.web8trace.kanban.model;
 public class Subtask extends Task {
     private int epicId;
 
-    public int getEpivId() {
+    public int getEpicId() {
         return epicId;
     }
 
-    public void setEpivId(int epicId) {
+    public void setEpicId(int epicId) {
         this.epicId = epicId;
     }
 }

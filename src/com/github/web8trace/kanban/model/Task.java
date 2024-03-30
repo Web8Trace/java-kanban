@@ -1,14 +1,12 @@
 package com.github.web8trace.kanban.model;
 
-import com.github.web8trace.kanban.service.TaskStatus;
-
 import java.util.Objects;
 
 public class Task {
     private String name;
     private String description;
     private int id;
-    private TaskStatus status = TaskStatus.NEW;
+    private TaskStatus status;
 
     public String getName() {
         return name;

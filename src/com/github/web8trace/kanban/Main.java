@@ -3,78 +3,116 @@ package com.github.web8trace.kanban;
 import com.github.web8trace.kanban.model.Epic;
 import com.github.web8trace.kanban.model.Subtask;
 import com.github.web8trace.kanban.model.Task;
+import com.github.web8trace.kanban.model.TaskStatus;
 import com.github.web8trace.kanban.service.TaskManager;
+
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
         TaskManager taskManager = new TaskManager();
 
-        Task t1 = new Task();
-        t1.setName("name1");
-        t1.setDescription("des1");
-        System.out.println(t1);
-        taskManager.addNewTask(t1);
-        Task t2 = new Task();
-        t2.setName("name2");
-        t2.setDescription("des2");
-        System.out.println(t2);
-        taskManager.addNewTask(t2);
-        System.out.println("---------------------------------------------");
-        System.out.println(taskManager.print(""));
-        System.out.println("---------------------------------------------");
+
         Epic e1 = new Epic();
         e1.setName("ep1");
         e1.setDescription("des3");
-        System.out.println(e1);
-        System.out.println(e1.getStatus());
-        taskManager.addNewTask(e1);
-        System.out.println(taskManager.print("Epic"));
-        System.out.println(e1.getStatus());
-        System.out.println("---------------------------------------------");
+        taskManager.addTask(e1);
+        System.out.println(taskManager.getEpic(1));
+        System.out.println(e1.getSubtasks().size());
+
         Subtask s1 = new Subtask();
         s1.setName("sub1");
         s1.setDescription("des4");
-        System.out.println(s1);
-        taskManager.addNewTask(s1);
-        System.out.println(s1);
-        taskManager.addSubtaskInEpic(e1,s1);
+        s1.setStatus(TaskStatus.IN_PROGRESS);
+
+        ArrayList<Subtask> list = new ArrayList<>();
+        list.add(s1);
+
+        e1.setSubtasks(list);
+        System.out.println(taskManager.getEpic(1));
+
+
+
+        s1.setStatus(TaskStatus.NEW);
+
+        System.out.println(taskManager.getEpic(1));
+
+
+        s1.setStatus(TaskStatus.DONE);
+
+        System.out.println(taskManager.getEpic(1));
+
+        System.out.println("----------------------------------------");
 
         Subtask s2 = new Subtask();
         s2.setName("sub2");
-        s2.setDescription("des5");
-        System.out.println(s2);
-        taskManager.addNewTask(s2);
-        System.out.println(s2);
-        taskManager.addSubtaskInEpic(e1,s2);
-        System.out.println(taskManager.print("Epic"));
-        System.out.println("---------------------------------------------");
-        taskManager.statusTaskDone(5);
-        System.out.println(taskManager.print("Epic"));
+        s2.setDescription("des4");
+        s2.setStatus(TaskStatus.IN_PROGRESS);
+        list.add(s2);
+        e1.setSubtasks(list);
+        System.out.println(taskManager.getEpic(1));
+        s2.setStatus(TaskStatus.DONE);
+        System.out.println(taskManager.getEpic(1));
 
+//        Task t2 = new Task();
+//        t2.setName("name2");
+//        t2.setDescription("des2");
+//        System.out.println(t2);
+//        taskManager.addTask(t2);
+//        System.out.println("---------------------------------------------");
 
-        System.out.println("---------------------------------------------");
-        Subtask s3 = new Subtask();
-        s3.setName("sub3");
-        s3.setDescription("des6");
-        System.out.println(s3);
-        taskManager.addNewTask(s3);
-        System.out.println(s3);
-        taskManager.addSubtaskInEpic(e1,s3);
-        System.out.println(taskManager.print("Epic"));
-        System.out.println("---------------------------------------------");
-        taskManager.statusTaskDone(6);
-        taskManager.statusTaskDone(4);
-        System.out.println(taskManager.print("Epic"));
-        System.out.println("---------------------------------------------");
-        Subtask s4 = new Subtask();
-        s3.setName("sub4");
-        s3.setDescription("des7");
-        taskManager.addNewTask(s4);
-        taskManager.addSubtaskInEpic(e1,s4);
-        System.out.println(taskManager.print("Epic"));
-        System.out.println("---------------------------------------------");
-        taskManager.statusTaskDone(7);
-        System.out.println(taskManager.print("Epic"));
+//        System.out.println("---------------------------------------------");
+//        Epic e1 = new Epic();
+//        e1.setName("ep1");
+//        e1.setDescription("des3");
+//        System.out.println(e1);
+//        System.out.println(e1.getStatus());
+//        taskManager.addTask(e1);
+//
+//        System.out.println(e1.getStatus());
+//        System.out.println("---------------------------------------------");
+//        Subtask s1 = new Subtask();
+//        s1.setName("sub1");
+//        s1.setDescription("des4");
+//        System.out.println(s1);
+//        taskManager.addTask(s1);
+//        System.out.println(s1);
+//
+//
+//        Subtask s2 = new Subtask();
+//        s2.setName("sub2");
+//        s2.setDescription("des5");
+//        System.out.println(s2);
+//        taskManager.addTask(s2);
+//        System.out.println(s2);
+//
+//        System.out.println("---------------------------------------------");
+//        taskManager.statusTaskDone(5);
+//
+//
+//
+//        System.out.println("---------------------------------------------");
+//        Subtask s3 = new Subtask();
+//        s3.setName("sub3");
+//        s3.setDescription("des6");
+//        System.out.println(s3);
+//        taskManager.addTask(s3);
+//        System.out.println(s3);
+//
+//        System.out.println("---------------------------------------------");
+//        taskManager.statusTaskDone(6);
+//        taskManager.statusTaskDone(4);
+//
+//        System.out.println("---------------------------------------------");
+//        Subtask s4 = new Subtask();
+//        s3.setName("sub4");
+//        s3.setDescription("des7");
+//        taskManager.addTask(s4);
+//
+//
+//        System.out.println("---------------------------------------------");
+//        taskManager.statusTaskDone(7);
+
 
 
 
