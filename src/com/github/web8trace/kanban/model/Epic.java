@@ -23,14 +23,14 @@ public class Epic extends Task {
             if (subtasks.get(i).getStatus() == TaskStatus.NEW) {
                 areAllSubtasksNew++;
             }
-            if (subtasks.get(i).getStatus() == TaskStatus.DONE){
+            if (subtasks.get(i).getStatus() == TaskStatus.DONE) {
                 areAllSubtasksDone++;
             }
         }
-        if(areAllSubtasksNew == subtasks.size() || subtasks.size() == 0){
+        if (areAllSubtasksNew == subtasks.size() || subtasks.size() == 0) {
             epicStatus = TaskStatus.NEW;
         }
-        if (areAllSubtasksDone == subtasks.size()-1){
+        if (areAllSubtasksDone == subtasks.size() - 1) {
             epicStatus = TaskStatus.DONE;
         }
         return epicStatus;
