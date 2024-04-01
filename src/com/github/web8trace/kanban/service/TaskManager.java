@@ -22,6 +22,11 @@ public class TaskManager {
     public void addSubtask(Subtask subtask) {
         subtask.setId(id());
         subtasks.put(subtask.getId(), subtask);
+        if (epics.containsKey(subtask.getEpicId())) {
+            Epic epic = epics.get(subtask.getEpicId());
+            ArrayList<Subtask> newSubtasks = epic.getSubtasks();
+            newSubtasks.add(subtask);
+        }
     }
 
     public void addEpic(Epic epic) {
@@ -34,10 +39,18 @@ public class TaskManager {
     }
 
     public void deleteSubtasks() {
+        for (Epic epic : epics.values()) {
+            ArrayList<Subtask> newSubtasks = epic.getSubtasks();
+            newSubtasks.clear();
+        }
         subtasks.clear();
     }
 
     public void deleteEpics() {
+        for (Epic epic : epics.values()) {
+            ArrayList<Subtask> newSubtasks = epic.getSubtasks();
+            newSubtasks.clear();
+        }
         epics.clear();
     }
 
@@ -50,6 +63,13 @@ public class TaskManager {
     public void updateSubtask(Subtask subtask) {
         if (subtasks.containsKey(subtask.getId())) {
             subtasks.put(subtask.getId(), subtask);
+        }
+        for (Epic epic : epics.values()) {
+            for (Subtask newSubtask : epic.getSubtasks()) {
+                epic.getSubtasks().remove(newSubtask);
+                epic.getSubtasks().add(subtask);
+                break;
+            }
         }
     }
 
@@ -69,62 +89,62 @@ public class TaskManager {
         if (subtasks.containsKey(id)) {
             subtasks.remove(id);
         }
+        for (Epic epic : epics.values()) {
+            for (Subtask subtask : epic.getSubtasks()) {
+                if (subtask.getId() == id) {
+                    epic.getSubtasks().remove(subtask);
+                    break;
+                }
+            }
+        }
     }
 
     public void removeEpic(Integer id) {
+        for (Epic epic : epics.values()) {
+            if (epic.getId() == id) {
+                epic.getSubtasks().clear();
+            }
+        }
         if (epics.containsKey(id)) {
             epics.remove(id);
         }
     }
 
     public Task getTask(Integer id) {
-        Task task = null;
-        if (tasks.containsKey(id)) {
-            task = tasks.get(id);
-        }
-        return task;
+        return tasks.get(id);
     }
 
     public Subtask getSubtask(Integer id) {
-        Subtask subtask = null;
-        if (subtasks.containsKey(id)) {
-            subtask = subtasks.get(id);
-        }
-        return subtask;
+        return subtasks.get(id);
     }
 
     public Epic getEpic(Integer id) {
-        Epic epic = null;
+        return epics.get(id);
+    }
+
+    public ArrayList<Task> getTasks() {
+        ArrayList<Task> newTasks = new ArrayList<>();
+        newTasks.addAll(tasks.values());
+        return newTasks;
+    }
+
+    public ArrayList<Epic> getEpics() {
+        ArrayList<Epic> newEpics = new ArrayList<>();
+        newEpics.addAll(epics.values());
+        return newEpics;
+    }
+
+    public ArrayList<Subtask> getSubtasks() {
+        ArrayList<Subtask> newSubtasks = new ArrayList<>();
+        newSubtasks.addAll(subtasks.values());
+        return newSubtasks;
+    }
+
+    public ArrayList<Subtask> getSubtasksInEpic(Integer id) {
         if (epics.containsKey(id)) {
-            epic = epics.get(id);
+            return epics.get(id).getSubtasks();
         }
-        return epic;
-    }
-
-    public HashMap<Integer, Task> getTasks() {
-        return tasks;
-    }
-
-    public HashMap<Integer, Epic> getEpics() {
-        return epics;
-    }
-
-    public HashMap<Integer, Subtask> getSubtasks() {
-        return subtasks;
-    }
-
-    public ArrayList<Subtask> getSubtasksInEpic(Epic epic) {
-        return epic.getSubtasks();
-    }
-
-    @Override
-    public String toString() {
-        return "TaskManager{" +
-                "id=" + id() +
-                ", task=" + tasks +
-                ", epic=" + epics +
-                ", subtask=" + subtasks +
-                '}';
+        return null;
     }
 
     private Integer id() {
